@@ -15,17 +15,17 @@ module OmniAuth
         super
       end
 
-      uid { raw_info['id'] }
+      uid { raw_info['self']['id'] }
 
       info do
         {
-          id: raw_info['id'],
-          name: raw_info['name'],
-          photo_url: meetup_photo_url,
-          image: meetup_photo_url,
-          urls: { public_profile: raw_info['link'] },
-          description: raw_info['bio'],
-          location: meetup_location
+          id: raw_info['self']['id'],
+          name: raw_info['self']['name'],
+          #photo_url: meetup_photo_url,
+          #image: meetup_photo_url,
+          #urls: { public_profile: raw_info['link'] },
+          #description: raw_info['bio'],
+          #location: meetup_location
         }
       end
 
@@ -39,7 +39,15 @@ module OmniAuth
       end
 
       def raw_info
-        @raw_info ||= JSON.parse(access_token.get('/2/member/self').body)
+        res = access_token.post(
+          "https://api.meetup.com/gql",
+          body: {query: 'query { self { id name }}'}.to_json,
+          headers: {'Content-type' => 'application/json'},
+        ).body
+        puts "RES: #{res}"
+        @raw_info ||= JSON.parse(res)['data']
+        print "RINFO: #{@raw_info}"
+        @raw_info
       end
 
       private
