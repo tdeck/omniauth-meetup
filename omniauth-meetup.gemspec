@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |gem|
   gem.name        = 'omniauth-meetup'
-  gem.version     = '0.0.8'
-  gem.authors     = ['Miles Woodroffe']
+  gem.version     = '0.0.9'
+  gem.authors     = ['Miles Woodroffe', 'Troy Deck']
   gem.email       = ['miles@thespecials.com']
   gem.homepage    = 'http://github.com/tapster/omniauth-meetup'
   gem.description = 'Meetup.com authentication handler for OmniAuth'
